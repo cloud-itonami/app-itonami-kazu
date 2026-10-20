@@ -1,0 +1,95 @@
+(ns sheets.a1-judgment
+  "A1 記法判定コア — itonami dapp bundle（pure, :effects #{}）。
+
+  スプレッドシート範囲の A1 記法の判定（正本: lg/src/sheets/a1.cljk —
+  Google Sheets v4 と Microsoft Graph workbook の両クライアントが使う
+  サブセット。0-based inclusive の {:sheet :r0 :c0 :r1 :c1} に正規化）:
+
+  - 列は base-26（A=0, Z=25, AA=26）。col->idx / idx->col は互逆。
+  - parse の枝: 空 → シート全体 / 先頭がセルでない → シート名のみ
+    / 1 パート → 単一セル / 終端がセルでない → 開いた範囲（r1 c1 は nil）
+    / それ以外 → 閉じた範囲。
+
+  col->idx の packed 入力: 列文字を 2 桁ずつ 10 進に畳んだ整数
+  （A=01 … Z=26。例: AB = 102）。戻りは 0-based 列 index。
+  idx->col は逆に packed を返す。
+  range-class の戻り: 0 = 単一セル / 1 = 閉じた範囲 / 2 = 開いた範囲
+    / 3 = シート名のみ / 4 = シート全体（空）
+
+  実行 host はスカラーのみ = KIR v3 / i64/direct ABI（kernel/selfhost 両対応）。
+
+  テストはゼロ引数 test-*、戻り 1/0:
+  <amu> test aiueos/sheets_a1.cljk"
+  (:export [main col->idx idx->col range-class
+            test-col test-col-2 test-col-3 test-idx test-range-class
+            test-fail-closed]))
+
+(defn main [] :i64
+  0)
+
+(defn col->idx [packed :i64] :i64
+  ;; 2 桁ずつ（01..26）の列文字。base-26 fold で 0-based index に
+  (let [a (quot packed 10000)
+        b (- (quot packed 100) (* 100 a))
+        c (- packed (* 100 (+ (* 100 a) b)))]
+    (if (and (= a 0) (= b 0))
+      (- c 1)
+      (if (= a 0)
+        (- (+ (* 26 b) c) 1)
+        (- (+ (* 26 (+ (* 26 a) b)) c) 1)))))
+
+(defn idx->col [idx :i64] :i64
+  ;; 逆変換（packed 表現: A=1, Z=26, AA=101, AAA=10101）
+  (let [m1 (- idx (* 26 (quot idx 26)))
+        r1 (+ m1 1)
+        q1 (quot idx 26)]
+    (if (= q1 0)
+      r1
+      (let [j (- q1 1)
+            m2 (- j (* 26 (quot j 26)))
+            r2 (+ m2 1)
+            q2 (quot j 26)]
+        (if (= q2 0)
+          (+ (* 100 r2) r1)
+          (let [k (- q2 1)
+                m3 (- k (* 26 (quot k 26)))
+                r3 (+ m3 1)]
+            (+ (* 10000 r3) (* 100 r2) r1)))))))
+
+(defn range-class [rng-blank :i64 start-is-cell :i64 n-parts :i64 end-is-cell :i64] :i64
+  (if (= rng-blank 1)
+    4
+    (if (= start-is-cell 0)
+      3
+      (if (= n-parts 1)
+        0
+        (if (= end-is-cell 1) 1 2)))))
+
+;; --- tests（戻り 1 = pass） ------------------------------------------------
+
+(defn test-col [] :i64
+  ;; A→0, Z→25
+  (if (= (+ (col->idx 1) (col->idx 26)) 25) 1 0))
+
+(defn test-col-2 [] :i64
+  ;; AA→26, AB→27
+  (if (= (+ (col->idx 101) (col->idx 102)) 53) 1 0))
+
+(defn test-col-3 [] :i64
+  ;; AAA→702
+  (if (= (col->idx 10101) 702) 1 0))
+
+(defn test-idx [] :i64
+  ;; 互逆: 0→A(1), 25→Z(26), 26→AA(101), 702→AAA(10101)
+  (if (= (+ (idx->col 0) (idx->col 25) (idx->col 26) (idx->col 702)) 10229) 1 0))
+
+(defn test-range-class [] :i64
+  ;; 0 単一セル / 1 閉じた範囲 / 2 開いた範囲 / 3 シート名のみ / 4 全体
+  (if (= (+ (range-class 0 1 1 0) (range-class 0 1 2 1) (range-class 0 1 2 0)
+            (range-class 0 0 1 0) (range-class 1 0 0 0))
+         10)
+    1 0))
+
+(defn test-fail-closed [] :i64
+  ;; シート全体は bounds 無し（4）で返す — 上書きしない
+  (if (= (range-class 1 1 2 1) 4) 1 0))
