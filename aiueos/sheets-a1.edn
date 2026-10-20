@@ -1,0 +1,17 @@
+;; app-sheets — itonami（dapp）の aiueos アプリ記述子（notes.edn 形）。
+;; 判定コアは aiueos/sheets_a1.cljk（A1 記法の列変換と範囲分類）。
+;; 正本は lg/src/sheets/a1.cljk（bb/JVM 実装）。pure（:effects #{}）。
+{:aiueos/component :app/sheets-a1
+ :aiueos/kind :app
+ :aiueos/trust :untrusted
+ :aiueos/source "sheets_a1.cljk"
+ :aiueos/wasm "sheets_a1.wasm"
+ :aiueos/entry "main"
+ :aiueos/args []
+ :aiueos/imports #{}
+ :aiueos/exports #{:app/main
+                   :app/col->idx
+                   :app/idx->col
+                   :app/range-class}
+ :aiueos/effects #{}
+ :aiueos/limits {:memory-pages 16 :fuel 5000000}}
