@@ -1,5 +1,8 @@
 # itonami Kazu（数） — 旧 etzhayyim-project-sheets — Google Sheets v4 + Microsoft Graph (workbook) compatible spreadsheet API
 
+> 2026-10-31（JUN-700）: Cloudflare Worker の edge facade は退役した。ブラウザ側は静的配信（`appview/README.md`）。
+> 下の edge 構成図とホストは旧構成の記録で、itonami.app 上には存在しない。
+
 **kazu.itonami.app** — a spreadsheet API whose external surface is shaped like **both**
 Google Sheets v4 and Microsoft Graph workbook, over **one** canonical store on **kotoba
 datomic** (graph `sheets-v1`). Third vertical of the workspace-compat program.
