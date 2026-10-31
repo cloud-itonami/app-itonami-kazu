@@ -1,5 +1,7 @@
 # sheets-mcp-component (Go App Component)
 
+> 2026-10-31（JUN-700）: この MCP endpoint 群の edge Worker は退役した。以下は旧構成の記録。公開方式は `../README.md`。
+
 This component exposes Sheets MCP endpoints on `/api/mcp` and `/{nanoid}/api/mcp`.
 
 ## Endpoints
