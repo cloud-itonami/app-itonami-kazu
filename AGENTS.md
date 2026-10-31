@@ -1,4 +1,4 @@
-# etzhayyim-project-sheets — Google Sheets v4 + Microsoft Graph (workbook) compatible spreadsheet API
+# itonami Kazu（数） — 旧 etzhayyim-project-sheets — Google Sheets v4 + Microsoft Graph (workbook) compatible spreadsheet API
 
 **sheets.etzhayyim.com** — a spreadsheet API whose external surface is shaped like **both**
 Google Sheets v4 and Microsoft Graph workbook, over **one** canonical store on **kotoba
