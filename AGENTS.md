@@ -1,6 +1,6 @@
 # itonami Kazu（数） — 旧 etzhayyim-project-sheets — Google Sheets v4 + Microsoft Graph (workbook) compatible spreadsheet API
 
-**sheets.etzhayyim.com** — a spreadsheet API whose external surface is shaped like **both**
+**kazu.itonami.app** — a spreadsheet API whose external surface is shaped like **both**
 Google Sheets v4 and Microsoft Graph workbook, over **one** canonical store on **kotoba
 datomic** (graph `sheets-v1`). Third vertical of the workspace-compat program.
 
@@ -13,20 +13,20 @@ Sheets ≝ CanonicalSpreadsheet[:sheet/*, gridJson] × KotobaDatomic[sheets-v1] 
 ## アーキテクチャ
 
 ```
-Google SDK  → sheets.etzhayyim.com/v4/spreadsheets/{id}/values/{range}                  ┐
-MS Graph SDK→ sheets.etzhayyim.com/v1.0/me/drive/items/{id}/workbook/worksheets/{s}/range ┘
+Google SDK  → kazu.itonami.app/v4/spreadsheets/{id}/values/{range}                  ┐
+MS Graph SDK→ kazu.itonami.app/v1.0/me/drive/items/{id}/workbook/worksheets/{s}/range ┘
   CF Worker sheets-compat (50-infra/cloudflare/workers/sheets-compat)
-   ├─ /xrpc/ai.etzhayyim.apps.sheets.*  → pod (actor-worker passthrough)
+   ├─ /xrpc/app.itonami.kazu.*  → pod (actor-worker passthrough)
    └─ provider REST → canonical XRPC → pod → reshape to provider JSON
-  lg-sheets pod (60-apps/etzhayyim-project-sheets/lg, FastAPI server.py)
+  lg-sheets pod (lg, FastAPI server.py)
    → kotoba datomic transact/q/pull on graph sheets-v1 (:sheet/* namespace)
 ```
 
 Same edge/routing/persistence rules as calendar/drive (ADR-2605111200; atproto
-catch-all actor:true → pipethroughActorWorker → sheets.etzhayyim.com/xrpc → `SHEETS_POD_URL`
+catch-all actor:true → pipethroughActorWorker → kazu.itonami.app/xrpc → `SHEETS_POD_URL`
 tunnel → pod; dedicated graph `sheets-v1`).
 
-## Canonical XRPC methods (ai.etzhayyim.apps.sheets.*)
+## Canonical XRPC methods (app.itonami.kazu.*)
 
 | method | Google Sheets v4 | Microsoft Graph workbook |
 |---|---|---|
@@ -36,7 +36,7 @@ tunnel → pod; dedicated graph `sheets-v1`).
 | `valuesUpdate` | spreadsheets.values.update (PUT) | PATCH …/range(address='…') |
 | `valuesBatchUpdate` | spreadsheets.values:batchUpdate | (workbook session batch) |
 
-Lexicons: `00-contracts/lexicons/ai/etzhayyim/apps/sheets/`. **Storage model (ADR D6)**: one
+Lexicons: `00-contracts/lexicons/app/itonami/kazu/`. **Storage model (ADR D6)**: one
 spreadsheet = one datomic entity; worksheet metadata in `:sheet/sheetsJson`, cell values in
 `:sheet/gridJson` = `{title: [[stringified cells]]}` (no-float rule — cells are strings, cast
 at the edge per valueRenderOption). A1 notation parsing in `lg_sheets/a1.py`. ETag/If-Match ←
@@ -58,7 +58,7 @@ test/sheets/{handlers,gitoffice_normalize}_test.cljc   # 13 tests / 43 assertion
 
 ## Test
 ```bash
-cd 60-apps/etzhayyim-project-sheets/lg && kbb run_tests.cljk
+cd lg && kbb run_tests.cljk
 cd 50-infra/cloudflare/workers/sheets-compat && node --test test/*.test.ts
 ```
 
@@ -72,7 +72,7 @@ JSON→`cheshire`, FastAPI→`org.httpkit.server` (`sheets.server`). Map keys st
 (JSON wire shape). Stores are synchronous (the Python `async` is dropped).
 
 ```bash
-cd 60-apps/etzhayyim-project-sheets/lg && kbb run_tests.cljk   # clj twin: 13 tests / 43 assertions
+cd lg && kbb run_tests.cljk   # clj twin: 13 tests / 43 assertions
 bb run -m sheets.server                                       # or `kbb -M:serve` (org.httpkit on :PORT)
 ```
 

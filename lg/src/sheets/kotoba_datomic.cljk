@@ -1,7 +1,7 @@
 (ns sheets.kotoba-datomic
   "kotoba datomic XRPC client for lg-sheets (clj port of lg_sheets/kotoba_datomic.py).
 
-  Wraps ai.etzhayyim.apps.kotoba.datomic.{transact,q,pull} — the canonical
+  Wraps app.itonami.kotoba.datomic.{transact,q,pull} — the canonical
   write/read surface for spreadsheets (graph sheets-v1). httpx -> babashka.http-client
   (ADR-2606280030 / actor-tree httpx->bb port pattern, PR #2612); JSON -> cheshire.
   Synchronous (blocking) — the Python AsyncClient becomes a plain per-call client.
@@ -104,7 +104,7 @@
 (defn transact [dm ops & {:keys [expected-parent]}]
   (let [body (cond-> {:graph (:graph dm) :tx_edn (edn-tx/encode-tx-data ops)}
                expected-parent (assoc :expected_parent expected-parent))
-        resp (post-json dm "ai.etzhayyim.apps.kotoba.datomic.transact" body)]
+        resp (post-json dm "app.itonami.kotoba.datomic.transact" body)]
     (when (>= (:status resp) 400)
       (throw (ex-info "kotoba transact failed" {:status (:status resp) :body (:body resp)})))
     (json/parse-string (:body resp))))
@@ -114,7 +114,7 @@
   ([dm query-edn inputs-edn]
    (let [body (cond-> {:graph (:graph dm) :query_edn query-edn}
                 (seq inputs-edn) (assoc :inputs_edn inputs-edn))
-         resp (post-json dm "ai.etzhayyim.apps.kotoba.datomic.q" body)]
+         resp (post-json dm "app.itonami.kotoba.datomic.q" body)]
      (when (>= (:status resp) 400)
        (throw (ex-info "kotoba q failed" {:status (:status resp) :body (:body resp)})))
      (let [rows (or (get (json/parse-string (:body resp)) "rows_edn") [])]
@@ -122,7 +122,7 @@
 
 (defn pull [dm entity]
   (let [body {:graph (:graph dm) :entity entity}
-        resp (post-json dm "ai.etzhayyim.apps.kotoba.datomic.pull" body)]
+        resp (post-json dm "app.itonami.kotoba.datomic.pull" body)]
     (cond
       (= 404 (:status resp)) nil
       (>= (:status resp) 400) (throw (ex-info "kotoba pull failed"

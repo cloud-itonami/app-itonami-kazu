@@ -1,5 +1,5 @@
 (ns sheets.handlers
-  "Canonical sheets method handlers (ai.etzhayyim.apps.sheets.*) — clj port of
+  "Canonical sheets method handlers (app.itonami.kazu.*) — clj port of
   lg_sheets/handlers.py.
 
   Storage-agnostic (takes a sheets.store/SheetStore). The sheets-compat worker

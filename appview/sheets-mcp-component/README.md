@@ -7,14 +7,14 @@ This component exposes Sheets MCP endpoints on `/api/mcp` and `/{nanoid}/api/mcp
 - `POST /api/mcp` (JSON-RPC 2.0: `tools/list`, `tools/call`)
 - `GET /api/mcp/tools`
 - `POST /api/mcp/tools/{tool}/call`
-- `POST https://{nanoid}.etzhayyim.com/api/mcp`
+- `POST https://{nanoid}.itonami.app/api/mcp`
 - `GET /{nanoid}/api/mcp/tools`
 - `POST /{nanoid}/api/mcp/tools/{tool}/call`
 
 ## Required Environment
 
 - `CLERK_JWKS_URL`
-- `REGISTRY_GET_PERFORMER_URL` (default: `http://r3g1stry.etzhayyim-performers-org-org_34dKrNTTK3cNixZzHIzzFwLw1s4.svc.cluster.local:8080/get-performer`)
+- `REGISTRY_GET_PERFORMER_URL` (default: `http://r3g1stry.itonami-performers-org-org_34dKrNTTK3cNixZzHIzzFwLw1s4.svc.cluster.local:8080/get-performer`)
 
 ## Optional Environment
 
@@ -30,7 +30,7 @@ This component exposes Sheets MCP endpoints on `/api/mcp` and `/{nanoid}/api/mcp
 ## Build
 
 ```bash
-etzhayyim build
+itonami build
 ```
 
 ## Deploy

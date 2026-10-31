@@ -19,14 +19,14 @@
                                (reset! request [url opts])
                                {:status 200 :body "{\"rows_edn\":[]}"})]
       (is (= [] (kd/q dm "[:find ?e]")))
-      (is (= "http://kotoba.internal/xrpc/ai.etzhayyim.apps.kotoba.datomic.q"
+      (is (= "http://kotoba.internal/xrpc/app.itonami.kotoba.datomic.q"
              (first @request)))
       (is (= "Bearer bound" (get-in @request [1 :headers "Authorization"]))))))
 
 (deftest explicit-server-auth-and-health-version
   (let [handler (server/handler-with-config {:api-key "secret"})
         response (handler {:request-method :get
-                           :uri "/xrpc/ai.etzhayyim.apps.sheets.valuesGet"
+                           :uri "/xrpc/app.itonami.kazu.valuesGet"
                            :headers {"x-api-key" "wrong"}})]
     (is (= 401 (:status response))))
   (is (= "explicit" (:version (health/run {:host-config {:version "explicit"}})))))

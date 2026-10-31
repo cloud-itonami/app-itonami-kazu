@@ -16,21 +16,21 @@
     "APP_CAPABILITIES": "[\"bpmn-dispatch\",\"oauth-redirect\"]",
     "APP_DESCRIPTION": "Thin edge facade; Google Sheets OAuth and sync run in BPMN + Zeebe Python",
     "APP_DISPLAY_NAME": "Sheets",
-    "APP_EMBED_URL": "https://r8fitt3i.etzhayyim.com/?embed=1",
+    "APP_EMBED_URL": "https://r8fitt3i.itonami.app/?embed=1",
     "APP_FRAMEWORK": "cljs-reagent-edge-bff",
-    "AGENTGATEWAY_MCP_ROUTER_URL": "https://mcp.etzhayyim.com/xrpc/com.etzhayyim.mcp.message",
+    "AGENTGATEWAY_MCP_ROUTER_URL": "https://mcp.itonami.app/xrpc/app.itonami.mcp.message",
     "APP_NANOID": "r8fitt3i",
     "APP_PERFORMER_TYPE": "system",
     "APP_UI_TYPE": "appview"
   },
   "routes": [
     {
-      "pattern": "r8fitt3i.etzhayyim.com/*",
-      "zone_name": "etzhayyim.com"
+      "pattern": "r8fitt3i.itonami.app/*",
+      "zone_name": "itonami.app"
     },
     {
-      "pattern": "sheets.etzhayyim.com/*",
-      "zone_name": "etzhayyim.com"
+      "pattern": "kazu.itonami.app/*",
+      "zone_name": "itonami.app"
     }
   ]
 }

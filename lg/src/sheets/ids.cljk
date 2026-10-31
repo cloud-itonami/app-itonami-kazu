@@ -2,13 +2,13 @@
   "Identity helpers for spreadsheets (clj port of lg_sheets/ids.py).
 
   Canonical entity id = \"sheet:book:{slug}\" (the datomic entity ref).
-  Path-based DID    = \"did:web:sheets.etzhayyim.com:spreadsheet:{slug}\".
-  AT URI            = \"at://{did}/ai.etzhayyim.apps.sheets.spreadsheet/{slug}\"."
+  Path-based DID    = \"did:web:kazu.itonami.app:spreadsheet:{slug}\".
+  AT URI            = \"at://{did}/app.itonami.kazu.spreadsheet/{slug}\"."
   (:require [kotoba.lang.text :as str]))
 
 (def ^:private slug-alphabet "0123456789abcdefghijklmnopqrstuvwxyz")
-(def ^:private domain "sheets.etzhayyim.com")
-(def ^:private collection "ai.etzhayyim.apps.sheets.spreadsheet")
+(def ^:private domain "kazu.itonami.app")
+(def ^:private collection "app.itonami.kazu.spreadsheet")
 
 (defn new-slug
   "16-char nanoid-shaped slug over [0-9a-z] (matches nanoid alphabet/length)."

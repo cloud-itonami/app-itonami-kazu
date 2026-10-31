@@ -1,19 +1,19 @@
 {
   "@context": "https://schema.org",
   "@type": "SoftwareApplication",
-  "@id": "https://sheets.etzhayyim.com",
+  "@id": "https://kazu.itonami.app",
   "name": "itonami-kazu",
   "description": "itonami Kazu（数）: Google Sheets v4 + Microsoft Graph (workbook) compatible spreadsheet API over kotoba datomic (graph sheets-v1). Third vertical of the workspace-compat program (ADR-2606010500).",
-  "url": "https://sheets.etzhayyim.com",
+  "url": "https://kazu.itonami.app",
   "applicationCategory": "Productivity",
   "operatingSystem": "Kubernetes",
-  "author": { "@type": "Organization", "name": "etzhayyim", "url": "https://etzhayyim.com" },
+  "author": { "@type": "Organization", "name": "itonami", "url": "https://itonami.app" },
   "softwareVersion": "0.1.0",
   "component": [
     {
       "@type": "SoftwareApplication",
       "name": "lg-sheets",
-      "description": "LangGraph + FastAPI XRPC server exposing ai.etzhayyim.apps.sheets.* over kotoba datomic.",
+      "description": "LangGraph + FastAPI XRPC server exposing app.itonami.kazu.* over kotoba datomic.",
       "applicationCategory": "Backend",
       "programmingLanguage": "Python",
       "runtimePlatform": "Vultr k8s LangServer pod (mitama-udf/lg-sheets:8000)"
@@ -24,7 +24,7 @@
       "description": "Cloudflare Worker edge serving Google Sheets v4 (/v4/spreadsheets) and Microsoft Graph workbook (/v1.0/me/drive/.../workbook) REST skins, translating to canonical XRPC.",
       "applicationCategory": "Edge",
       "programmingLanguage": "TypeScript",
-      "runtimePlatform": "Cloudflare Worker (sheets.etzhayyim.com)"
+      "runtimePlatform": "Cloudflare Worker (kazu.itonami.app)"
     }
   ],
   "isBasedOn": "90-docs/adr/2606010500-workspace-compat-datomic-schema.md"

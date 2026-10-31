@@ -16,7 +16,7 @@
 ## 追加済みコンポーネント
 
 - `wasm/sheets-mcp-component`
-  - `https://[nanoid].etzhayyim.com/api/mcp` と `/[nanoid]/api/mcp` 互換ルートの両方を処理。
+  - `https://[nanoid].itonami.app/api/mcp` と `/[nanoid]/api/mcp` 互換ルートの両方を処理。
   - Clerk JWT 認証 + registry 解決 + backend bridge 転送を提供。
 
 ## 移行ステータス

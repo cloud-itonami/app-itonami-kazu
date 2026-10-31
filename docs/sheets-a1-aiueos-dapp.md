@@ -6,7 +6,7 @@
 ## 位置づけ
 
 app-sheets は **Google Sheets v4 と Microsoft Graph workbook の両方に互換な
-スプレッドシート API**（sheets.etzhayyim.com、canonical は kotoba datomic
+スプレッドシート API**（kazu.itonami.app、canonical は kotoba datomic
 `sheets-v1`）。workspace-compat の第 3 垂直。本スライスは **A1 記法の
 判定**（`a1.cljk`）を判定コア化。
 

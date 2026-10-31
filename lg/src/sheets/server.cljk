@@ -5,11 +5,11 @@
   routes / auth / persistence contract:
 
     GET  /health /ok
-    GET  /xrpc/ai.etzhayyim.apps.sheets.spreadsheetsGet
-    POST /xrpc/ai.etzhayyim.apps.sheets.spreadsheetsCreate
-    GET  /xrpc/ai.etzhayyim.apps.sheets.valuesGet
-    POST /xrpc/ai.etzhayyim.apps.sheets.valuesUpdate
-    POST /xrpc/ai.etzhayyim.apps.sheets.valuesBatchUpdate
+    GET  /xrpc/app.itonami.kazu.spreadsheetsGet
+    POST /xrpc/app.itonami.kazu.spreadsheetsCreate
+    GET  /xrpc/app.itonami.kazu.valuesGet
+    POST /xrpc/app.itonami.kazu.valuesUpdate
+    POST /xrpc/app.itonami.kazu.valuesBatchUpdate
 
   Persistence = kotoba datomic (graph sheets-v1). x-api-key (LG_SHEETS_API_KEY)
   optional auth; atproto actor-worker x-internal-trust is the edge boundary."
@@ -51,7 +51,7 @@
       (string? b) (if (str/blank? b) {} (json/parse-string b))
       :else (let [s (slurp b)] (if (str/blank? s) {} (json/parse-string s))))))
 
-(def ^:private xrpc-prefix "/xrpc/ai.etzhayyim.apps.sheets.")
+(def ^:private xrpc-prefix "/xrpc/app.itonami.kazu.")
 
 (defn handler-with-config [{:keys [api-key kotoba http-post] :or {api-key "" kotoba kd/default-config}}]
  (fn [req]
