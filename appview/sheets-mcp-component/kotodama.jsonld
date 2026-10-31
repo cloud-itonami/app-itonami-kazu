@@ -1,6 +1,6 @@
 {
-  "@context": "https://etzhayyim.com/ns/kotodama/v1",
-  "@id": "did:web:sheets.etzhayyim.com",
+  "@context": "https://itonami.app/ns/kotodama/v1",
+  "@id": "did:web:kazu.itonami.app",
   "name": "sheets-ui",
   "nanoid": "r8fitt3i",
   "performerType": "system",
@@ -19,12 +19,12 @@
     "isBot": true,
     "agentType": "autonomous",
     "category": "google-workspace",
-    "operator": "etzhayyim.com",
+    "operator": "itonami.app",
     "capabilities": ["bpmn-dispatch", "oauth-redirect"]
   },
   "routes": [
     {
-      "host": "sheets.etzhayyim.com",
+      "host": "kazu.itonami.app",
       "paths": ["/"],
       "tls": true
     }
@@ -32,9 +32,9 @@
   "triggers": {
     "subscribeRepos": {
       "collections": [
-        "com.etzhayyim.apps.sheets.sheetsEntity",
-        "com.etzhayyim.apps.sheets.sheetsEvent",
-        "com.etzhayyim.apps.sheets.sheetsReport"
+        "app.itonami.kazu.sheetsEntity",
+        "app.itonami.kazu.sheetsEvent",
+        "app.itonami.kazu.sheetsReport"
       ]
     }
   },

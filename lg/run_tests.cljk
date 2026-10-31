@@ -1,7 +1,7 @@
 #!/usr/bin/env kbb
 ;; lg-sheets clojure.test runner (repo rule — .clj, NOT .sh; ADR-2606072802).
 ;; Loads every cljc namespace (verifies they compile under bb) + runs the suites.
-;; Usage:  kbb run_tests.cljk   (from 60-apps/etzhayyim-project-sheets/lg)
+;; Usage:  kbb run_tests.cljk   (from lg)
 
 (require '[clojure.test :as t]
          ;; load-verify every ported namespace (incl. the server + langgraph health graph)
