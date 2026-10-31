@@ -1,4 +1,4 @@
-# etzhayyim-project-sheets App migration
+# itonami Kazu（数）App migration（旧 etzhayyim-project-sheets）
 
 このディレクトリは `legacy-runtime` 実装を残したまま、App 版を段階移行するための配置先です。
 
